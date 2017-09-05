@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhongan.dao.ServerUrlDao">
+
+	<sql id="Base_Column_List">
+		ID, CKEY, URL, VERSION
+	</sql>
+
+	<select id="selectServerUrls" resultType="map">
+		select
+		<include refid="Base_Column_List" />
+		from TB_SERVER_URL
+		where 1=1
+		<if test="ckey != null and ckey != ''">
+			and key = #{ckey}
+		</if>
+		
+	</select>
+
+</mapper>

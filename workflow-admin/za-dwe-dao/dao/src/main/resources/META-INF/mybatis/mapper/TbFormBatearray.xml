@@ -1,0 +1,627 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhongan.dwe.dao.repository.tbformbatearray.TbFormBatearrayRepository">
+
+<insert id="insertTbFormbate" parameterType="com.zhongan.dwe.dao.dataobject.TbFormBatearray" useGeneratedKeys="true" keyProperty="id">
+ insert into TB_FORM_BATEARRAY (ID,CODE,NAME,BYTES) values
+(#{id} ,#{code} ,#{name} ,#{bytes})
+
+</insert>
+
+<insert id="insert" parameterType="com.zhongan.dwe.dao.dataobject.TbFormBatearray" useGeneratedKeys="true" keyProperty="id">
+ insert into TB_FORM_BATEARRAY (ID,CODE,NAME,BYTES,GMT_CREATED,GMT_MODIFIED,CREATOR,MODIFIER,IS_DELETED,REMARK) values
+(#{id} ,#{code} ,#{name} ,#{bytes} ,#{gmtCreated} ,#{gmtModified} ,#{creator} ,#{modifier} ,#{isDeleted} ,#{remark} )
+
+</insert>
+
+<insert id="batchInsert" parameterType="java.util.List">
+ insert into TB_FORM_BATEARRAY (ID,CODE,NAME,BYTES,GMT_CREATED,GMT_MODIFIED,CREATOR,MODIFIER,IS_DELETED,REMARK) values 
+<foreach collection="list" item="item" index="index" separator=",">
+(#{item.id} ,#{item.code} ,#{item.name} ,#{item.bytes} ,#{item.gmtCreated} ,#{item.gmtModified} ,#{item.creator} ,#{item.modifier} ,#{item.isDeleted} ,#{item.remark} )
+</foreach>
+</insert>
+
+<update id="update">
+<include refid="updateColumn" />
+where ID = #{o.id}
+</update>
+
+<update id="updateIncludeNull">
+<include refid="updateColumnIncludeNull" />
+where ID = #{o.id}
+</update>
+
+<sql id="updateColumn">
+ update TB_FORM_BATEARRAY 
+<set> 
+<if test= "o.code!=null">
+ CODE = #{o.code},
+</if>
+<if test= "o.name!=null">
+ NAME = #{o.name},
+</if>
+<if test= "o.bytes!=null">
+ BYTES = #{o.bytes},
+</if>
+<if test= "o.gmtCreated!=null">
+ GMT_CREATED = #{o.gmtCreated},
+</if>
+<if test= "o.gmtModified!=null">
+ GMT_MODIFIED = #{o.gmtModified},
+</if>
+<if test= "o.creator!=null">
+ CREATOR = #{o.creator},
+</if>
+<if test= "o.modifier!=null">
+ MODIFIER = #{o.modifier},
+</if>
+<if test= "o.isDeleted!=null">
+ IS_DELETED = #{o.isDeleted},
+</if>
+<if test= "o.remark!=null">
+ REMARK = #{o.remark},
+</if>
+</set>
+</sql>
+
+<sql id="updateColumnIncludeNull">
+ update TB_FORM_BATEARRAY 
+<set> 
+ CODE = #{o.code},
+ NAME = #{o.name},
+ BYTES = #{o.bytes},
+ GMT_CREATED = #{o.gmtCreated},
+ GMT_MODIFIED = #{o.gmtModified},
+ CREATOR = #{o.creator},
+ MODIFIER = #{o.modifier},
+ IS_DELETED = #{o.isDeleted},
+ REMARK = #{o.remark},
+</set>
+</sql>
+
+<update id="updateByCondition">
+<include refid="updateColumn" />
+<include refid="condition" />
+</update>
+
+<update id="updateIncludeNullByCondition">
+<include refid="updateColumnIncludeNull" />
+<include refid="condition" />
+</update>
+
+<update id="batchUpdate">
+<foreach collection="list" item="item" index="index" open="" 
+close="" separator=";"> 
+ update TB_FORM_BATEARRAY 
+<set> 
+<if test="item.code!=null"> 
+ CODE = #{item.code},
+</if> 
+<if test="item.name!=null"> 
+ NAME = #{item.name},
+</if> 
+<if test="item.bytes!=null"> 
+ BYTES = #{item.bytes},
+</if> 
+<if test="item.gmtCreated!=null"> 
+ GMT_CREATED = #{item.gmtCreated},
+</if> 
+<if test="item.gmtModified!=null"> 
+ GMT_MODIFIED = #{item.gmtModified},
+</if> 
+<if test="item.creator!=null"> 
+ CREATOR = #{item.creator},
+</if> 
+<if test="item.modifier!=null"> 
+ MODIFIER = #{item.modifier},
+</if> 
+<if test="item.isDeleted!=null"> 
+ IS_DELETED = #{item.isDeleted},
+</if> 
+<if test="item.remark!=null"> 
+ REMARK = #{item.remark},
+</if> 
+</set> 
+ where ID = #{item.id} 
+</foreach> 
+</update>
+
+<update id="batchUpdateIncludeNull">
+<foreach collection="list" item="item" index="index" open="" 
+close="" separator=";"> 
+ update TB_FORM_BATEARRAY 
+<set> 
+ CODE = #{item.code},
+ NAME = #{item.name},
+ BYTES = #{item.bytes},
+ GMT_CREATED = #{item.gmtCreated},
+ GMT_MODIFIED = #{item.gmtModified},
+ CREATOR = #{item.creator},
+ MODIFIER = #{item.modifier},
+ IS_DELETED = #{item.isDeleted},
+ REMARK = #{item.remark},
+</set> 
+ where ID = #{item.id} 
+</foreach> 
+</update>
+
+<delete id="deleteByOid" parameterType="String">
+ delete from TB_FORM_BATEARRAY where
+ ID = #{id}
+</delete>
+
+<delete id="batchRemove">
+delete from TB_FORM_BATEARRAY where ID in
+<foreach item="item" index="index" collection="list" open="("
+separator="," close=")">
+ #{item}
+</foreach>
+</delete>
+
+<delete id="deleteByCondition">
+ delete from TB_FORM_BATEARRAY
+<include refid="condition" />
+</delete>
+
+<select id="get" resultType="com.zhongan.dwe.dao.dataobject.TbFormBatearray" 
+parameterType="String"> 
+ select <include refid="allColumns" /> 
+ from TB_FORM_BATEARRAY where ID = #{id} 
+</select>
+
+<select id="findAll" resultType="com.zhongan.dwe.dao.dataobject.TbFormBatearray"> 
+ select <include refid="allColumns"/> from TB_FORM_BATEARRAY 
+</select>
+
+<select id="findByCondition" resultType="com.zhongan.dwe.dao.dataobject.TbFormBatearray" 
+parameterType="com.zhongan.dwe.dao.repository.tbformbatearray.condition.TbFormBatearrayCondition"> 
+ select <include refid="selectColumns" /> 
+ from TB_FORM_BATEARRAY 
+<include refid="condition" /> 
+<include refid="orderBy" /> 
+<if test="page != null and page.start != null and page.limit != null"> 
+ limit ${page.start},${page.limit}  
+</if> 
+</select>
+
+<select id="countAll" resultType="int"> 
+ select count(*) from TB_FORM_BATEARRAY 
+</select>
+
+<select id="countByCondition" resultType="int"> 
+ select count(*) from TB_FORM_BATEARRAY  
+<include refid="condition" /> 
+</select>
+
+<sql id="selectColumns"> 
+<choose>
+<when test="select != null and select.columns != null">
+<foreach collection="select.columns" item="item" index="index" separator=",">
+ ${item} 
+</foreach>
+</when> 
+<otherwise><include refid="allColumns"/></otherwise>
+</choose>
+</sql>
+
+<sql id="allColumns">
+ ID as id, CODE as code, NAME as name, BYTES as bytes, GMT_CREATED as gmtCreated, GMT_MODIFIED as gmtModified, CREATOR as creator, MODIFIER as modifier, IS_DELETED as isDeleted, REMARK as remark</sql>	
+	
+<sql id="orderBy">
+<if test="orderBy != null and orderBy.orderBy != null"> 
+ order by 
+<foreach item="item" index="index" collection="orderBy.orderBy" separator=","> 
+ ${index} ${item} 
+</foreach>
+</if>
+</sql>	
+
+<sql id="condition">
+<where>
+<if test= "where != null and where.inId != null">
+and ID in 
+<foreach collection="where.inId" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.inCode != null">
+and CODE in 
+<foreach collection="where.inCode" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.inName != null">
+and NAME in 
+<foreach collection="where.inName" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.inBytes != null">
+and BYTES in 
+<foreach collection="where.inBytes" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.inCreator != null">
+and CREATOR in 
+<foreach collection="where.inCreator" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.inModifier != null">
+and MODIFIER in 
+<foreach collection="where.inModifier" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.inIsDeleted != null">
+and IS_DELETED in 
+<foreach collection="where.inIsDeleted" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.inRemark != null">
+and REMARK in 
+<foreach collection="where.inRemark" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.notInId != null">
+and ID not in 
+<foreach collection="where.notInId" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.notInCode != null">
+and CODE not in 
+<foreach collection="where.notInCode" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.notInName != null">
+and NAME not in 
+<foreach collection="where.notInName" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.notInBytes != null">
+and BYTES not in 
+<foreach collection="where.notInBytes" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.notInCreator != null">
+and CREATOR not in 
+<foreach collection="where.notInCreator" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.notInModifier != null">
+and MODIFIER not in 
+<foreach collection="where.notInModifier" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.notInIsDeleted != null">
+and IS_DELETED not in 
+<foreach collection="where.notInIsDeleted" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.notInRemark != null">
+and REMARK not in 
+<foreach collection="where.notInRemark" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.idIsNull == true">
+and ID is null
+</if>
+<if test= "where != null and where.idIsNull == false">
+and ID is not null
+</if>
+<if test= "where != null and where.codeIsNull == true">
+and CODE is null
+</if>
+<if test= "where != null and where.codeIsNull == false">
+and CODE is not null
+</if>
+<if test= "where != null and where.nameIsNull == true">
+and NAME is null
+</if>
+<if test= "where != null and where.nameIsNull == false">
+and NAME is not null
+</if>
+<if test= "where != null and where.bytesIsNull == true">
+and BYTES is null
+</if>
+<if test= "where != null and where.bytesIsNull == false">
+and BYTES is not null
+</if>
+<if test= "where != null and where.gmtCreatedIsNull == true">
+and GMT_CREATED is null
+</if>
+<if test= "where != null and where.gmtCreatedIsNull == false">
+and GMT_CREATED is not null
+</if>
+<if test= "where != null and where.gmtModifiedIsNull == true">
+and GMT_MODIFIED is null
+</if>
+<if test= "where != null and where.gmtModifiedIsNull == false">
+and GMT_MODIFIED is not null
+</if>
+<if test= "where != null and where.creatorIsNull == true">
+and CREATOR is null
+</if>
+<if test= "where != null and where.creatorIsNull == false">
+and CREATOR is not null
+</if>
+<if test= "where != null and where.modifierIsNull == true">
+and MODIFIER is null
+</if>
+<if test= "where != null and where.modifierIsNull == false">
+and MODIFIER is not null
+</if>
+<if test= "where != null and where.isDeletedIsNull == true">
+and IS_DELETED is null
+</if>
+<if test= "where != null and where.isDeletedIsNull == false">
+and IS_DELETED is not null
+</if>
+<if test= "where != null and where.remarkIsNull == true">
+and REMARK is null
+</if>
+<if test= "where != null and where.remarkIsNull == false">
+and REMARK is not null
+</if>
+<if test= "where != null and where.idNotEqual != null">
+and ID != #{where.idNotEqual}
+</if>
+<if test= "where != null and where.codeNotEqual != null">
+and CODE != #{where.codeNotEqual}
+</if>
+<if test= "where != null and where.nameNotEqual != null">
+and NAME != #{where.nameNotEqual}
+</if>
+<if test= "where != null and where.bytesNotEqual != null">
+and BYTES != #{where.bytesNotEqual}
+</if>
+<if test= "where != null and where.gmtCreatedNotEqual != null">
+and GMT_CREATED != #{where.gmtCreatedNotEqual}
+</if>
+<if test= "where != null and where.gmtModifiedNotEqual != null">
+and GMT_MODIFIED != #{where.gmtModifiedNotEqual}
+</if>
+<if test= "where != null and where.creatorNotEqual != null">
+and CREATOR != #{where.creatorNotEqual}
+</if>
+<if test= "where != null and where.modifierNotEqual != null">
+and MODIFIER != #{where.modifierNotEqual}
+</if>
+<if test= "where != null and where.isDeletedNotEqual != null">
+and IS_DELETED != #{where.isDeletedNotEqual}
+</if>
+<if test= "where != null and where.remarkNotEqual != null">
+and REMARK != #{where.remarkNotEqual}
+</if>
+<if test= "where != null and where.likeId != null">
+and ID like CONCAT('%','${where.likeId}','%')
+</if> 
+<if test= "where != null and where.likeCode != null">
+and CODE like CONCAT('%','${where.likeCode}','%')
+</if> 
+<if test= "where != null and where.likeName != null">
+and NAME like CONCAT('%','${where.likeName}','%')
+</if> 
+<if test= "where != null and where.likeCreator != null">
+and CREATOR like CONCAT('%','${where.likeCreator}','%')
+</if> 
+<if test= "where != null and where.likeModifier != null">
+and MODIFIER like CONCAT('%','${where.likeModifier}','%')
+</if> 
+<if test= "where != null and where.likeIsDeleted != null">
+and IS_DELETED like CONCAT('%','${where.likeIsDeleted}','%')
+</if> 
+<if test= "where != null and where.likeRemark != null">
+and REMARK like CONCAT('%','${where.likeRemark}','%')
+</if> 
+<if test= "where != null and where.leftLikeId != null">
+and ID like CONCAT('%','${where.leftLikeId}')
+</if> 
+<if test= "where != null and where.leftLikeCode != null">
+and CODE like CONCAT('%','${where.leftLikeCode}')
+</if> 
+<if test= "where != null and where.leftLikeName != null">
+and NAME like CONCAT('%','${where.leftLikeName}')
+</if> 
+<if test= "where != null and where.leftLikeCreator != null">
+and CREATOR like CONCAT('%','${where.leftLikeCreator}')
+</if> 
+<if test= "where != null and where.leftLikeModifier != null">
+and MODIFIER like CONCAT('%','${where.leftLikeModifier}')
+</if> 
+<if test= "where != null and where.leftLikeIsDeleted != null">
+and IS_DELETED like CONCAT('%','${where.leftLikeIsDeleted}')
+</if> 
+<if test= "where != null and where.leftLikeRemark != null">
+and REMARK like CONCAT('%','${where.leftLikeRemark}')
+</if> 
+<if test= "where != null and where.rightLikeId != null">
+and ID like CONCAT('${where.rightLikeId}','%')
+</if> 
+<if test= "where != null and where.rightLikeCode != null">
+and CODE like CONCAT('${where.rightLikeCode}','%')
+</if> 
+<if test= "where != null and where.rightLikeName != null">
+and NAME like CONCAT('${where.rightLikeName}','%')
+</if> 
+<if test= "where != null and where.rightLikeCreator != null">
+and CREATOR like CONCAT('${where.rightLikeCreator}','%')
+</if> 
+<if test= "where != null and where.rightLikeModifier != null">
+and MODIFIER like CONCAT('${where.rightLikeModifier}','%')
+</if> 
+<if test= "where != null and where.rightLikeIsDeleted != null">
+and IS_DELETED like CONCAT('${where.rightLikeIsDeleted}','%')
+</if> 
+<if test= "where != null and where.rightLikeRemark != null">
+and REMARK like CONCAT('${where.rightLikeRemark}','%')
+</if> 
+<if test= "where != null and where.notLikeId != null">
+and ID not like CONCAT('%','${where.notLikeId}','%')
+</if> 
+<if test= "where != null and where.notLikeCode != null">
+and CODE not like CONCAT('%','${where.notLikeCode}','%')
+</if> 
+<if test= "where != null and where.notLikeName != null">
+and NAME not like CONCAT('%','${where.notLikeName}','%')
+</if> 
+<if test= "where != null and where.notLikeCreator != null">
+and CREATOR not like CONCAT('%','${where.notLikeCreator}','%')
+</if> 
+<if test= "where != null and where.notLikeModifier != null">
+and MODIFIER not like CONCAT('%','${where.notLikeModifier}','%')
+</if> 
+<if test= "where != null and where.notLikeIsDeleted != null">
+and IS_DELETED not like CONCAT('%','${where.notLikeIsDeleted}','%')
+</if> 
+<if test= "where != null and where.notLikeRemark != null">
+and REMARK not like CONCAT('%','${where.notLikeRemark}','%')
+</if> 
+<if test= "where != null and where.notLeftLikeId != null">
+and ID not like CONCAT('%','${where.notLeftLikeId}')
+</if> 
+<if test= "where != null and where.notLeftLikeCode != null">
+and CODE not like CONCAT('%','${where.notLeftLikeCode}')
+</if> 
+<if test= "where != null and where.notLeftLikeName != null">
+and NAME not like CONCAT('%','${where.notLeftLikeName}')
+</if> 
+<if test= "where != null and where.notLeftLikeCreator != null">
+and CREATOR not like CONCAT('%','${where.notLeftLikeCreator}')
+</if> 
+<if test= "where != null and where.notLeftLikeModifier != null">
+and MODIFIER not like CONCAT('%','${where.notLeftLikeModifier}')
+</if> 
+<if test= "where != null and where.notLeftLikeIsDeleted != null">
+and IS_DELETED not like CONCAT('%','${where.notLeftLikeIsDeleted}')
+</if> 
+<if test= "where != null and where.notLeftLikeRemark != null">
+and REMARK not like CONCAT('%','${where.notLeftLikeRemark}')
+</if> 
+<if test= "where != null and where.notRightLikeId != null">
+and ID not like CONCAT('%','${where.notRightLikeId}','%')
+</if> 
+<if test= "where != null and where.notRightLikeCode != null">
+and CODE not like CONCAT('%','${where.notRightLikeCode}','%')
+</if> 
+<if test= "where != null and where.notRightLikeName != null">
+and NAME not like CONCAT('%','${where.notRightLikeName}','%')
+</if> 
+<if test= "where != null and where.notRightLikeCreator != null">
+and CREATOR not like CONCAT('%','${where.notRightLikeCreator}','%')
+</if> 
+<if test= "where != null and where.notRightLikeModifier != null">
+and MODIFIER not like CONCAT('%','${where.notRightLikeModifier}','%')
+</if> 
+<if test= "where != null and where.notRightLikeIsDeleted != null">
+and IS_DELETED not like CONCAT('%','${where.notRightLikeIsDeleted}','%')
+</if> 
+<if test= "where != null and where.notRightLikeRemark != null">
+and REMARK not like CONCAT('%','${where.notRightLikeRemark}','%')
+</if> 
+<if test= "where != null and where.greaterThanId != null and where.lessThanId != null">
+and ID &lt; #{where.lessThanId} and ID &gt; #{where.greaterThanId}
+</if>
+<if test= "where != null and where.equalAndGreaterThanId != null and where.equalAndLessThanId != null">
+and ID &lt;= #{where.equalAndLessThanId} and ID &gt;= #{where.equalAndGreaterThanId}
+</if>
+<if test= "where != null and where.greaterThanCode != null and where.lessThanCode != null">
+and CODE &lt; #{where.lessThanCode} and CODE &gt; #{where.greaterThanCode}
+</if>
+<if test= "where != null and where.equalAndGreaterThanCode != null and where.equalAndLessThanCode != null">
+and CODE &lt;= #{where.equalAndLessThanCode} and CODE &gt;= #{where.equalAndGreaterThanCode}
+</if>
+<if test= "where != null and where.greaterThanName != null and where.lessThanName != null">
+and NAME &lt; #{where.lessThanName} and NAME &gt; #{where.greaterThanName}
+</if>
+<if test= "where != null and where.equalAndGreaterThanName != null and where.equalAndLessThanName != null">
+and NAME &lt;= #{where.equalAndLessThanName} and NAME &gt;= #{where.equalAndGreaterThanName}
+</if>
+<if test= "where != null and where.greaterThanBytes != null and where.lessThanBytes != null">
+and BYTES &lt; #{where.lessThanBytes} and BYTES &gt; #{where.greaterThanBytes}
+</if>
+<if test= "where != null and where.equalAndGreaterThanBytes != null and where.equalAndLessThanBytes != null">
+and BYTES &lt;= #{where.equalAndLessThanBytes} and BYTES &gt;= #{where.equalAndGreaterThanBytes}
+</if>
+<if test= "where != null and where.greaterThanGmtCreated != null and where.lessThanGmtCreated != null">
+and GMT_CREATED &lt; #{where.lessThanGmtCreated} and GMT_CREATED &gt; #{where.greaterThanGmtCreated}
+</if>
+<if test= "where != null and where.equalAndGreaterThanGmtCreated != null and where.equalAndLessThanGmtCreated != null">
+and GMT_CREATED &lt;= #{where.equalAndLessThanGmtCreated} and GMT_CREATED &gt;= #{where.equalAndGreaterThanGmtCreated}
+</if>
+<if test= "where != null and where.greaterThanGmtModified != null and where.lessThanGmtModified != null">
+and GMT_MODIFIED &lt; #{where.lessThanGmtModified} and GMT_MODIFIED &gt; #{where.greaterThanGmtModified}
+</if>
+<if test= "where != null and where.equalAndGreaterThanGmtModified != null and where.equalAndLessThanGmtModified != null">
+and GMT_MODIFIED &lt;= #{where.equalAndLessThanGmtModified} and GMT_MODIFIED &gt;= #{where.equalAndGreaterThanGmtModified}
+</if>
+<if test= "where != null and where.greaterThanCreator != null and where.lessThanCreator != null">
+and CREATOR &lt; #{where.lessThanCreator} and CREATOR &gt; #{where.greaterThanCreator}
+</if>
+<if test= "where != null and where.equalAndGreaterThanCreator != null and where.equalAndLessThanCreator != null">
+and CREATOR &lt;= #{where.equalAndLessThanCreator} and CREATOR &gt;= #{where.equalAndGreaterThanCreator}
+</if>
+<if test= "where != null and where.greaterThanModifier != null and where.lessThanModifier != null">
+and MODIFIER &lt; #{where.lessThanModifier} and MODIFIER &gt; #{where.greaterThanModifier}
+</if>
+<if test= "where != null and where.equalAndGreaterThanModifier != null and where.equalAndLessThanModifier != null">
+and MODIFIER &lt;= #{where.equalAndLessThanModifier} and MODIFIER &gt;= #{where.equalAndGreaterThanModifier}
+</if>
+<if test= "where != null and where.greaterThanIsDeleted != null and where.lessThanIsDeleted != null">
+and IS_DELETED &lt; #{where.lessThanIsDeleted} and IS_DELETED &gt; #{where.greaterThanIsDeleted}
+</if>
+<if test= "where != null and where.equalAndGreaterThanIsDeleted != null and where.equalAndLessThanIsDeleted != null">
+and IS_DELETED &lt;= #{where.equalAndLessThanIsDeleted} and IS_DELETED &gt;= #{where.equalAndGreaterThanIsDeleted}
+</if>
+<if test= "where != null and where.greaterThanRemark != null and where.lessThanRemark != null">
+and REMARK &lt; #{where.lessThanRemark} and REMARK &gt; #{where.greaterThanRemark}
+</if>
+<if test= "where != null and where.equalAndGreaterThanRemark != null and where.equalAndLessThanRemark != null">
+and REMARK &lt;= #{where.equalAndLessThanRemark} and REMARK &gt;= #{where.equalAndGreaterThanRemark}
+</if>
+<if test= "where != null and where.id != null">
+and ID = #{where.id}
+</if> 
+<if test= "where != null and where.code != null">
+and CODE = #{where.code}
+</if> 
+<if test= "where != null and where.name != null">
+and NAME = #{where.name}
+</if> 
+<if test= "where != null and where.bytes != null">
+and BYTES = #{where.bytes}
+</if> 
+<if test= "where != null and where.gmtCreated != null">
+and GMT_CREATED = #{where.gmtCreated}
+</if> 
+<if test= "where != null and where.gmtModified != null">
+and GMT_MODIFIED = #{where.gmtModified}
+</if> 
+<if test= "where != null and where.creator != null">
+and CREATOR = #{where.creator}
+</if> 
+<if test= "where != null and where.modifier != null">
+and MODIFIER = #{where.modifier}
+</if> 
+<if test= "where != null and where.isDeleted != null">
+and IS_DELETED = #{where.isDeleted}
+</if> 
+<if test= "where != null and where.remark != null">
+and REMARK = #{where.remark}
+</if> 
+ </where>
+ </sql>	
+</mapper>

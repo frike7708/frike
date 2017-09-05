@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhongan.dwe.dao.repository.tbextuser.TbExtUserRepository">
+<insert id="insert" parameterType="com.zhongan.dwe.dao.dataobject.TbExtUser" useGeneratedKeys="true" keyProperty="id">
+ insert into TB_EXT_USER (ID,REV,FIRST,LAST,EMAIL,PWD) values
+(#{id} ,#{rev} ,#{first} ,#{last} ,#{email} ,#{pwd} )
+
+</insert>
+
+<insert id="batchInsert" parameterType="java.util.List">
+ insert into TB_EXT_USER (ID,REV,FIRST,LAST,EMAIL,PWD) values 
+<foreach collection="list" item="item" index="index" separator=",">
+(#{item.id} ,#{item.rev} ,#{item.first} ,#{item.last} ,#{item.email} ,#{item.pwd} )
+</foreach>
+</insert>
+
+<update id="update">
+<include refid="updateColumn" />
+where ID = #{o.id}
+</update>
+
+<update id="updateIncludeNull">
+<include refid="updateColumnIncludeNull" />
+where ID = #{o.id}
+</update>
+
+<sql id="updateColumn">
+ update TB_EXT_USER 
+<set> 
+<if test= "o.rev!=null">
+ REV = #{o.rev},
+</if>
+<if test= "o.first!=null">
+ FIRST = #{o.first},
+</if>
+<if test= "o.last!=null">
+ LAST = #{o.last},
+</if>
+<if test= "o.email!=null">
+ EMAIL = #{o.email},
+</if>
+<if test= "o.pwd!=null">
+ PWD = #{o.pwd},
+</if>
+</set>
+</sql>
+
+<sql id="updateColumnIncludeNull">
+ update TB_EXT_USER 
+<set> 
+ REV = #{o.rev},
+ FIRST = #{o.first},
+ LAST = #{o.last},
+ EMAIL = #{o.email},
+ PWD = #{o.pwd},
+</set>
+</sql>
+
+<update id="updateByCondition">
+<include refid="updateColumn" />
+<include refid="condition" />
+</update>
+
+<update id="updateIncludeNullByCondition">
+<include refid="updateColumnIncludeNull" />
+<include refid="condition" />
+</update>
+
+<update id="batchUpdate">
+<foreach collection="list" item="item" index="index" open="" 
+close="" separator=";"> 
+ update TB_EXT_USER 
+<set> 
+<if test="item.rev!=null"> 
+ REV = #{item.rev},
+</if> 
+<if test="item.first!=null"> 
+ FIRST = #{item.first},
+</if> 
+<if test="item.last!=null"> 
+ LAST = #{item.last},
+</if> 
+<if test="item.email!=null"> 
+ EMAIL = #{item.email},
+</if> 
+<if test="item.pwd!=null"> 
+ PWD = #{item.pwd},
+</if> 
+</set> 
+ where ID = #{item.id} 
+</foreach> 
+</update>
+
+<update id="batchUpdateIncludeNull">
+<foreach collection="list" item="item" index="index" open="" 
+close="" separator=";"> 
+ update TB_EXT_USER 
+<set> 
+ REV = #{item.rev},
+ FIRST = #{item.first},
+ LAST = #{item.last},
+ EMAIL = #{item.email},
+ PWD = #{item.pwd},
+</set> 
+ where ID = #{item.id} 
+</foreach> 
+</update>
+
+<delete id="deleteByOid" parameterType="String">
+ delete from TB_EXT_USER where
+ ID = #{id}
+</delete>
+
+<delete id="batchRemove">
+delete from TB_EXT_USER where ID in
+<foreach item="item" index="index" collection="list" open="("
+separator="," close=")">
+ #{item}
+</foreach>
+</delete>
+
+<delete id="deleteByCondition">
+ delete from TB_EXT_USER
+<include refid="condition" />
+</delete>
+
+<select id="get" resultType="com.zhongan.dwe.dao.dataobject.TbExtUser" 
+parameterType="String"> 
+ select <include refid="allColumns" /> 
+ from TB_EXT_USER where ID = #{id} 
+</select>
+
+<select id="findAll" resultType="com.zhongan.dwe.dao.dataobject.TbExtUser"> 
+ select <include refid="allColumns"/> from TB_EXT_USER 
+</select>
+
+<select id="findByCondition" resultType="com.zhongan.dwe.dao.dataobject.TbExtUser" 
+parameterType="com.zhongan.dwe.dao.repository.tbextuser.condition.TbExtUserCondition"> 
+ select <include refid="selectColumns" /> 
+ from TB_EXT_USER 
+<include refid="condition" /> 
+<include refid="orderBy" /> 
+<if test="page != null and page.start != null and page.limit != null"> 
+ limit ${page.start},${page.limit}  
+</if> 
+</select>
+
+<select id="countAll" resultType="int"> 
+ select count(*) from TB_EXT_USER 
+</select>
+
+<select id="countByCondition" resultType="int"> 
+ select count(*) from TB_EXT_USER  
+<include refid="condition" /> 
+</select>
+
+<sql id="selectColumns"> 
+<choose>
+<when test="select != null and select.columns != null">
+<foreach collection="select.columns" item="item" index="index" separator=",">
+ ${item} 
+</foreach>
+</when> 
+<otherwise><include refid="allColumns"/></otherwise>
+</choose>
+</sql>
+
+<sql id="allColumns">
+ ID as id, REV as rev, FIRST as first, LAST as last, EMAIL as email, PWD as pwd</sql>	
+	
+<sql id="orderBy">
+<if test="orderBy != null and orderBy.orderBy != null"> 
+ order by 
+<foreach item="item" index="index" collection="orderBy.orderBy" separator=","> 
+ ${index} ${item} 
+</foreach>
+</if>
+</sql>	
+
+<sql id="condition">
+<where>
+<if test= "where != null and where.inId != null">
+and ID in 
+<foreach collection="where.inId" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.inRev != null">
+and REV in 
+<foreach collection="where.inRev" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.inFirst != null">
+and FIRST in 
+<foreach collection="where.inFirst" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.inLast != null">
+and LAST in 
+<foreach collection="where.inLast" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.inEmail != null">
+and EMAIL in 
+<foreach collection="where.inEmail" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.inPwd != null">
+and PWD in 
+<foreach collection="where.inPwd" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.notInId != null">
+and ID not in 
+<foreach collection="where.notInId" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.notInRev != null">
+and REV not in 
+<foreach collection="where.notInRev" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.notInFirst != null">
+and FIRST not in 
+<foreach collection="where.notInFirst" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.notInLast != null">
+and LAST not in 
+<foreach collection="where.notInLast" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.notInEmail != null">
+and EMAIL not in 
+<foreach collection="where.notInEmail" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.notInPwd != null">
+and PWD not in 
+<foreach collection="where.notInPwd" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.idIsNull == true">
+and ID is null
+</if>
+<if test= "where != null and where.idIsNull == false">
+and ID is not null
+</if>
+<if test= "where != null and where.revIsNull == true">
+and REV is null
+</if>
+<if test= "where != null and where.revIsNull == false">
+and REV is not null
+</if>
+<if test= "where != null and where.firstIsNull == true">
+and FIRST is null
+</if>
+<if test= "where != null and where.firstIsNull == false">
+and FIRST is not null
+</if>
+<if test= "where != null and where.lastIsNull == true">
+and LAST is null
+</if>
+<if test= "where != null and where.lastIsNull == false">
+and LAST is not null
+</if>
+<if test= "where != null and where.emailIsNull == true">
+and EMAIL is null
+</if>
+<if test= "where != null and where.emailIsNull == false">
+and EMAIL is not null
+</if>
+<if test= "where != null and where.pwdIsNull == true">
+and PWD is null
+</if>
+<if test= "where != null and where.pwdIsNull == false">
+and PWD is not null
+</if>
+<if test= "where != null and where.idNotEqual != null">
+and ID != #{where.idNotEqual}
+</if>
+<if test= "where != null and where.revNotEqual != null">
+and REV != #{where.revNotEqual}
+</if>
+<if test= "where != null and where.firstNotEqual != null">
+and FIRST != #{where.firstNotEqual}
+</if>
+<if test= "where != null and where.lastNotEqual != null">
+and LAST != #{where.lastNotEqual}
+</if>
+<if test= "where != null and where.emailNotEqual != null">
+and EMAIL != #{where.emailNotEqual}
+</if>
+<if test= "where != null and where.pwdNotEqual != null">
+and PWD != #{where.pwdNotEqual}
+</if>
+<if test= "where != null and where.likeId != null">
+and ID like CONCAT('%','${where.likeId}','%')
+</if> 
+<if test= "where != null and where.likeFirst != null">
+and FIRST like CONCAT('%','${where.likeFirst}','%')
+</if> 
+<if test= "where != null and where.likeLast != null">
+and LAST like CONCAT('%','${where.likeLast}','%')
+</if> 
+<if test= "where != null and where.likeEmail != null">
+and EMAIL like CONCAT('%','${where.likeEmail}','%')
+</if> 
+<if test= "where != null and where.likePwd != null">
+and PWD like CONCAT('%','${where.likePwd}','%')
+</if> 
+<if test= "where != null and where.leftLikeId != null">
+and ID like CONCAT('%','${where.leftLikeId}')
+</if> 
+<if test= "where != null and where.leftLikeFirst != null">
+and FIRST like CONCAT('%','${where.leftLikeFirst}')
+</if> 
+<if test= "where != null and where.leftLikeLast != null">
+and LAST like CONCAT('%','${where.leftLikeLast}')
+</if> 
+<if test= "where != null and where.leftLikeEmail != null">
+and EMAIL like CONCAT('%','${where.leftLikeEmail}')
+</if> 
+<if test= "where != null and where.leftLikePwd != null">
+and PWD like CONCAT('%','${where.leftLikePwd}')
+</if> 
+<if test= "where != null and where.rightLikeId != null">
+and ID like CONCAT('${where.rightLikeId}','%')
+</if> 
+<if test= "where != null and where.rightLikeFirst != null">
+and FIRST like CONCAT('${where.rightLikeFirst}','%')
+</if> 
+<if test= "where != null and where.rightLikeLast != null">
+and LAST like CONCAT('${where.rightLikeLast}','%')
+</if> 
+<if test= "where != null and where.rightLikeEmail != null">
+and EMAIL like CONCAT('${where.rightLikeEmail}','%')
+</if> 
+<if test= "where != null and where.rightLikePwd != null">
+and PWD like CONCAT('${where.rightLikePwd}','%')
+</if> 
+<if test= "where != null and where.notLikeId != null">
+and ID not like CONCAT('%','${where.notLikeId}','%')
+</if> 
+<if test= "where != null and where.notLikeFirst != null">
+and FIRST not like CONCAT('%','${where.notLikeFirst}','%')
+</if> 
+<if test= "where != null and where.notLikeLast != null">
+and LAST not like CONCAT('%','${where.notLikeLast}','%')
+</if> 
+<if test= "where != null and where.notLikeEmail != null">
+and EMAIL not like CONCAT('%','${where.notLikeEmail}','%')
+</if> 
+<if test= "where != null and where.notLikePwd != null">
+and PWD not like CONCAT('%','${where.notLikePwd}','%')
+</if> 
+<if test= "where != null and where.notLeftLikeId != null">
+and ID not like CONCAT('%','${where.notLeftLikeId}')
+</if> 
+<if test= "where != null and where.notLeftLikeFirst != null">
+and FIRST not like CONCAT('%','${where.notLeftLikeFirst}')
+</if> 
+<if test= "where != null and where.notLeftLikeLast != null">
+and LAST not like CONCAT('%','${where.notLeftLikeLast}')
+</if> 
+<if test= "where != null and where.notLeftLikeEmail != null">
+and EMAIL not like CONCAT('%','${where.notLeftLikeEmail}')
+</if> 
+<if test= "where != null and where.notLeftLikePwd != null">
+and PWD not like CONCAT('%','${where.notLeftLikePwd}')
+</if> 
+<if test= "where != null and where.notRightLikeId != null">
+and ID not like CONCAT('%','${where.notRightLikeId}','%')
+</if> 
+<if test= "where != null and where.notRightLikeFirst != null">
+and FIRST not like CONCAT('%','${where.notRightLikeFirst}','%')
+</if> 
+<if test= "where != null and where.notRightLikeLast != null">
+and LAST not like CONCAT('%','${where.notRightLikeLast}','%')
+</if> 
+<if test= "where != null and where.notRightLikeEmail != null">
+and EMAIL not like CONCAT('%','${where.notRightLikeEmail}','%')
+</if> 
+<if test= "where != null and where.notRightLikePwd != null">
+and PWD not like CONCAT('%','${where.notRightLikePwd}','%')
+</if> 
+<if test= "where != null and where.greaterThanId != null and where.lessThanId != null">
+and ID &lt; #{where.lessThanId} and ID &gt; #{where.greaterThanId}
+</if>
+<if test= "where != null and where.equalAndGreaterThanId != null and where.equalAndLessThanId != null">
+and ID &lt;= #{where.equalAndLessThanId} and ID &gt;= #{where.equalAndGreaterThanId}
+</if>
+<if test= "where != null and where.greaterThanRev != null and where.lessThanRev != null">
+and REV &lt; #{where.lessThanRev} and REV &gt; #{where.greaterThanRev}
+</if>
+<if test= "where != null and where.equalAndGreaterThanRev != null and where.equalAndLessThanRev != null">
+and REV &lt;= #{where.equalAndLessThanRev} and REV &gt;= #{where.equalAndGreaterThanRev}
+</if>
+<if test= "where != null and where.greaterThanFirst != null and where.lessThanFirst != null">
+and FIRST &lt; #{where.lessThanFirst} and FIRST &gt; #{where.greaterThanFirst}
+</if>
+<if test= "where != null and where.equalAndGreaterThanFirst != null and where.equalAndLessThanFirst != null">
+and FIRST &lt;= #{where.equalAndLessThanFirst} and FIRST &gt;= #{where.equalAndGreaterThanFirst}
+</if>
+<if test= "where != null and where.greaterThanLast != null and where.lessThanLast != null">
+and LAST &lt; #{where.lessThanLast} and LAST &gt; #{where.greaterThanLast}
+</if>
+<if test= "where != null and where.equalAndGreaterThanLast != null and where.equalAndLessThanLast != null">
+and LAST &lt;= #{where.equalAndLessThanLast} and LAST &gt;= #{where.equalAndGreaterThanLast}
+</if>
+<if test= "where != null and where.greaterThanEmail != null and where.lessThanEmail != null">
+and EMAIL &lt; #{where.lessThanEmail} and EMAIL &gt; #{where.greaterThanEmail}
+</if>
+<if test= "where != null and where.equalAndGreaterThanEmail != null and where.equalAndLessThanEmail != null">
+and EMAIL &lt;= #{where.equalAndLessThanEmail} and EMAIL &gt;= #{where.equalAndGreaterThanEmail}
+</if>
+<if test= "where != null and where.greaterThanPwd != null and where.lessThanPwd != null">
+and PWD &lt; #{where.lessThanPwd} and PWD &gt; #{where.greaterThanPwd}
+</if>
+<if test= "where != null and where.equalAndGreaterThanPwd != null and where.equalAndLessThanPwd != null">
+and PWD &lt;= #{where.equalAndLessThanPwd} and PWD &gt;= #{where.equalAndGreaterThanPwd}
+</if>
+<if test= "where != null and where.id != null">
+and ID = #{where.id}
+</if> 
+<if test= "where != null and where.rev != null">
+and REV = #{where.rev}
+</if> 
+<if test= "where != null and where.first != null">
+and FIRST = #{where.first}
+</if> 
+<if test= "where != null and where.last != null">
+and LAST = #{where.last}
+</if> 
+<if test= "where != null and where.email != null">
+and EMAIL = #{where.email}
+</if> 
+<if test= "where != null and where.pwd != null">
+and PWD = #{where.pwd}
+</if> 
+ </where>
+ </sql>	
+</mapper>

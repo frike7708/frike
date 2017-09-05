@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhongan.dwe.dao.repository.groupanduser.GroupUserSpecial">
+
+	<select id="selectUserList" resultType="map">
+		SELECT
+			a.ID_ groupId,
+		    a.NAME_ groupName,
+			c.ID_ userId
+		FROM
+			ACT_ID_GROUP a,
+			ACT_ID_MEMBERSHIP b,
+			ACT_ID_USER c
+		WHERE 1=1
+		AND	a.ID_ = b.GROUP_ID_
+		AND b.USER_ID_ = c.ID_
+		AND a.ID_ = #{groupId}
+	</select>
+	
+	
+	<select id="otherUserList" resultType="map">
+		SELECT 
+		    a.id_ userId
+		FROM
+		    ACT_ID_USER a
+		WHERE
+		    a.id_ NOT IN (SELECT 
+		            b.USER_ID_
+		        FROM
+		            ACT_ID_MEMBERSHIP b
+		        WHERE
+		            b.GROUP_ID_ = #{groupId} )
+
+	</select>
+	
+	
+	<select id="getMembership" resultType="map">
+		SELECT 
+		    a.GROUP_ID_,
+		    a.USER_ID_
+		FROM
+		    ACT_ID_MEMBERSHIP a
+		WHERE
+		    a.GROUP_ID_ = #{groupId}
+		        AND a.user_id_ = #{userId}
+
+	</select>
+	
+	<insert id="insert">
+		 insert into ACT_ID_MEMBERSHIP (USER_ID_,GROUP_ID_) values
+		(#{userId} ,#{groupId} )
+	</insert>
+	
+	
+	<delete id="deleteByGroupID">
+		 delete from ACT_ID_MEMBERSHIP where
+		 GROUP_ID_ = #{groupId}
+	</delete>
+	
+	
+
+</mapper>

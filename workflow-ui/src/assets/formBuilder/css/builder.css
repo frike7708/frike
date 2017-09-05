@@ -1,0 +1,50 @@
+body {
+  font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.template-textarea-wrap {
+  display: block !important;
+}
+
+.content {
+  margin: auto;
+  width: 100%;
+  max-width: 90%  ;
+  padding-top: 3em;
+}
+
+.form-rendered .build-wrap {
+  display: none;
+}
+
+.render-wrap {
+  display: none;
+}
+
+.form-rendered .render-wrap {
+  display: block;
+}
+
+#edit-form {
+  display: none;
+  float: right;
+  color: #2e6da4;
+  background: bottom;
+}
+
+.form-rendered #edit-form {
+  display: block;
+}
+
+#copy-html {
+  display: none;
+  float: right;
+  color: #449d44;
+  background: bottom;
+}
+
+.form-rendered #copy-html {
+  display: block;
+}
+
+

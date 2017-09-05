@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhongan.dwe.dao.repository.tbserverurl.TbServerUrlRepository">
+<insert id="insert" parameterType="com.zhongan.dwe.dao.dataobject.TbServerUrl" useGeneratedKeys="true" keyProperty="id">
+ insert into TB_SERVER_URL (ID,CKEY,URL,VERSION,GMT_CREATED,GMT_MODIFIED,CREATOR,MODIFIER,IS_DELETED) values
+(#{id} ,#{ckey} ,#{url} ,#{version} ,#{gmtCreated} ,#{gmtModified} ,#{creator} ,#{modifier} ,#{isDeleted} )
+
+</insert>
+
+<insert id="batchInsert" parameterType="java.util.List">
+ insert into TB_SERVER_URL (ID,CKEY,URL,VERSION,GMT_CREATED,GMT_MODIFIED,CREATOR,MODIFIER,IS_DELETED) values 
+<foreach collection="list" item="item" index="index" separator=",">
+(#{item.id} ,#{item.ckey} ,#{item.url} ,#{item.version} ,#{item.gmtCreated} ,#{item.gmtModified} ,#{item.creator} ,#{item.modifier} ,#{item.isDeleted} )
+</foreach>
+</insert>
+
+<update id="update">
+<include refid="updateColumn" />
+where ID = #{o.id}
+</update>
+
+<update id="updateIncludeNull">
+<include refid="updateColumnIncludeNull" />
+where ID = #{o.id}
+</update>
+
+<sql id="updateColumn">
+ update TB_SERVER_URL 
+<set> 
+<if test= "o.ckey!=null">
+ CKEY = #{o.ckey},
+</if>
+<if test= "o.url!=null">
+ URL = #{o.url},
+</if>
+<if test= "o.version!=null">
+ VERSION = #{o.version},
+</if>
+<if test= "o.gmtCreated!=null">
+ GMT_CREATED = #{o.gmtCreated},
+</if>
+<if test= "o.gmtModified!=null">
+ GMT_MODIFIED = #{o.gmtModified},
+</if>
+<if test= "o.creator!=null">
+ CREATOR = #{o.creator},
+</if>
+<if test= "o.modifier!=null">
+ MODIFIER = #{o.modifier},
+</if>
+<if test= "o.isDeleted!=null">
+ IS_DELETED = #{o.isDeleted},
+</if>
+</set>
+</sql>
+
+<sql id="updateColumnIncludeNull">
+ update TB_SERVER_URL 
+<set> 
+ CKEY = #{o.ckey},
+ URL = #{o.url},
+ VERSION = #{o.version},
+ GMT_CREATED = #{o.gmtCreated},
+ GMT_MODIFIED = #{o.gmtModified},
+ CREATOR = #{o.creator},
+ MODIFIER = #{o.modifier},
+ IS_DELETED = #{o.isDeleted},
+</set>
+</sql>
+
+<update id="updateByCondition">
+<include refid="updateColumn" />
+<include refid="condition" />
+</update>
+
+<update id="updateIncludeNullByCondition">
+<include refid="updateColumnIncludeNull" />
+<include refid="condition" />
+</update>
+
+<update id="batchUpdate">
+<foreach collection="list" item="item" index="index" open="" 
+close="" separator=";"> 
+ update TB_SERVER_URL 
+<set> 
+<if test="item.ckey!=null"> 
+ CKEY = #{item.ckey},
+</if> 
+<if test="item.url!=null"> 
+ URL = #{item.url},
+</if> 
+<if test="item.version!=null"> 
+ VERSION = #{item.version},
+</if> 
+<if test="item.gmtCreated!=null"> 
+ GMT_CREATED = #{item.gmtCreated},
+</if> 
+<if test="item.gmtModified!=null"> 
+ GMT_MODIFIED = #{item.gmtModified},
+</if> 
+<if test="item.creator!=null"> 
+ CREATOR = #{item.creator},
+</if> 
+<if test="item.modifier!=null"> 
+ MODIFIER = #{item.modifier},
+</if> 
+<if test="item.isDeleted!=null"> 
+ IS_DELETED = #{item.isDeleted},
+</if> 
+</set> 
+ where ID = #{item.id} 
+</foreach> 
+</update>
+
+<update id="batchUpdateIncludeNull">
+<foreach collection="list" item="item" index="index" open="" 
+close="" separator=";"> 
+ update TB_SERVER_URL 
+<set> 
+ CKEY = #{item.ckey},
+ URL = #{item.url},
+ VERSION = #{item.version},
+ GMT_CREATED = #{item.gmtCreated},
+ GMT_MODIFIED = #{item.gmtModified},
+ CREATOR = #{item.creator},
+ MODIFIER = #{item.modifier},
+ IS_DELETED = #{item.isDeleted},
+</set> 
+ where ID = #{item.id} 
+</foreach> 
+</update>
+
+<delete id="deleteByOid" parameterType="String">
+ delete from TB_SERVER_URL where
+ ID = #{id}
+</delete>
+
+<delete id="batchRemove">
+delete from TB_SERVER_URL where ID in
+<foreach item="item" index="index" collection="list" open="("
+separator="," close=")">
+ #{item}
+</foreach>
+</delete>
+
+<delete id="deleteByCondition">
+ delete from TB_SERVER_URL
+<include refid="condition" />
+</delete>
+
+<select id="get" resultType="com.zhongan.dwe.dao.dataobject.TbServerUrl" 
+parameterType="String"> 
+ select <include refid="allColumns" /> 
+ from TB_SERVER_URL where ID = #{id} 
+</select>
+
+<select id="findAll" resultType="com.zhongan.dwe.dao.dataobject.TbServerUrl"> 
+ select <include refid="allColumns"/> from TB_SERVER_URL 
+</select>
+
+<select id="findByCondition" resultType="com.zhongan.dwe.dao.dataobject.TbServerUrl" 
+parameterType="com.zhongan.dwe.dao.repository.tbserverurl.condition.TbServerUrlCondition"> 
+ select <include refid="selectColumns" /> 
+ from TB_SERVER_URL 
+<include refid="condition" /> 
+<include refid="orderBy" /> 
+<if test="page != null and page.start != null and page.limit != null"> 
+ limit ${page.start},${page.limit}  
+</if> 
+</select>
+
+<select id="countAll" resultType="int"> 
+ select count(*) from TB_SERVER_URL 
+</select>
+
+<select id="countByCondition" resultType="int"> 
+ select count(*) from TB_SERVER_URL  
+<include refid="condition" /> 
+</select>
+
+<sql id="selectColumns"> 
+<choose>
+<when test="select != null and select.columns != null">
+<foreach collection="select.columns" item="item" index="index" separator=",">
+ ${item} 
+</foreach>
+</when> 
+<otherwise><include refid="allColumns"/></otherwise>
+</choose>
+</sql>
+
+<sql id="allColumns">
+ ID as id, CKEY as ckey, URL as url, VERSION as version, GMT_CREATED as gmtCreated, GMT_MODIFIED as gmtModified, CREATOR as creator, MODIFIER as modifier, IS_DELETED as isDeleted</sql>	
+	
+<sql id="orderBy">
+<if test="orderBy != null and orderBy.orderBy != null"> 
+ order by 
+<foreach item="item" index="index" collection="orderBy.orderBy" separator=","> 
+ ${index} ${item} 
+</foreach>
+</if>
+</sql>	
+
+<sql id="condition">
+<where>
+<if test= "where != null and where.inId != null">
+and ID in 
+<foreach collection="where.inId" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.inCkey != null">
+and CKEY in 
+<foreach collection="where.inCkey" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.inUrl != null">
+and URL in 
+<foreach collection="where.inUrl" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.inVersion != null">
+and VERSION in 
+<foreach collection="where.inVersion" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.inCreator != null">
+and CREATOR in 
+<foreach collection="where.inCreator" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.inModifier != null">
+and MODIFIER in 
+<foreach collection="where.inModifier" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.inIsDeleted != null">
+and IS_DELETED in 
+<foreach collection="where.inIsDeleted" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.notInId != null">
+and ID not in 
+<foreach collection="where.notInId" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.notInCkey != null">
+and CKEY not in 
+<foreach collection="where.notInCkey" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.notInUrl != null">
+and URL not in 
+<foreach collection="where.notInUrl" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.notInVersion != null">
+and VERSION not in 
+<foreach collection="where.notInVersion" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.notInCreator != null">
+and CREATOR not in 
+<foreach collection="where.notInCreator" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.notInModifier != null">
+and MODIFIER not in 
+<foreach collection="where.notInModifier" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.notInIsDeleted != null">
+and IS_DELETED not in 
+<foreach collection="where.notInIsDeleted" index="index" item="item" open="(" separator="," close=")">
+ #{item} 
+</foreach>
+</if> 
+<if test= "where != null and where.idIsNull == true">
+and ID is null
+</if>
+<if test= "where != null and where.idIsNull == false">
+and ID is not null
+</if>
+<if test= "where != null and where.ckeyIsNull == true">
+and CKEY is null
+</if>
+<if test= "where != null and where.ckeyIsNull == false">
+and CKEY is not null
+</if>
+<if test= "where != null and where.urlIsNull == true">
+and URL is null
+</if>
+<if test= "where != null and where.urlIsNull == false">
+and URL is not null
+</if>
+<if test= "where != null and where.versionIsNull == true">
+and VERSION is null
+</if>
+<if test= "where != null and where.versionIsNull == false">
+and VERSION is not null
+</if>
+<if test= "where != null and where.gmtCreatedIsNull == true">
+and GMT_CREATED is null
+</if>
+<if test= "where != null and where.gmtCreatedIsNull == false">
+and GMT_CREATED is not null
+</if>
+<if test= "where != null and where.gmtModifiedIsNull == true">
+and GMT_MODIFIED is null
+</if>
+<if test= "where != null and where.gmtModifiedIsNull == false">
+and GMT_MODIFIED is not null
+</if>
+<if test= "where != null and where.creatorIsNull == true">
+and CREATOR is null
+</if>
+<if test= "where != null and where.creatorIsNull == false">
+and CREATOR is not null
+</if>
+<if test= "where != null and where.modifierIsNull == true">
+and MODIFIER is null
+</if>
+<if test= "where != null and where.modifierIsNull == false">
+and MODIFIER is not null
+</if>
+<if test= "where != null and where.isDeletedIsNull == true">
+and IS_DELETED is null
+</if>
+<if test= "where != null and where.isDeletedIsNull == false">
+and IS_DELETED is not null
+</if>
+<if test= "where != null and where.idNotEqual != null">
+and ID != #{where.idNotEqual}
+</if>
+<if test= "where != null and where.ckeyNotEqual != null">
+and CKEY != #{where.ckeyNotEqual}
+</if>
+<if test= "where != null and where.urlNotEqual != null">
+and URL != #{where.urlNotEqual}
+</if>
+<if test= "where != null and where.versionNotEqual != null">
+and VERSION != #{where.versionNotEqual}
+</if>
+<if test= "where != null and where.gmtCreatedNotEqual != null">
+and GMT_CREATED != #{where.gmtCreatedNotEqual}
+</if>
+<if test= "where != null and where.gmtModifiedNotEqual != null">
+and GMT_MODIFIED != #{where.gmtModifiedNotEqual}
+</if>
+<if test= "where != null and where.creatorNotEqual != null">
+and CREATOR != #{where.creatorNotEqual}
+</if>
+<if test= "where != null and where.modifierNotEqual != null">
+and MODIFIER != #{where.modifierNotEqual}
+</if>
+<if test= "where != null and where.isDeletedNotEqual != null">
+and IS_DELETED != #{where.isDeletedNotEqual}
+</if>
+<if test= "where != null and where.likeId != null">
+and ID like CONCAT('%','${where.likeId}','%')
+</if> 
+<if test= "where != null and where.likeCkey != null">
+and CKEY like CONCAT('%','${where.likeCkey}','%')
+</if> 
+<if test= "where != null and where.likeUrl != null">
+and URL like CONCAT('%','${where.likeUrl}','%')
+</if> 
+<if test= "where != null and where.likeCreator != null">
+and CREATOR like CONCAT('%','${where.likeCreator}','%')
+</if> 
+<if test= "where != null and where.likeModifier != null">
+and MODIFIER like CONCAT('%','${where.likeModifier}','%')
+</if> 
+<if test= "where != null and where.likeIsDeleted != null">
+and IS_DELETED like CONCAT('%','${where.likeIsDeleted}','%')
+</if> 
+<if test= "where != null and where.leftLikeId != null">
+and ID like CONCAT('%','${where.leftLikeId}')
+</if> 
+<if test= "where != null and where.leftLikeCkey != null">
+and CKEY like CONCAT('%','${where.leftLikeCkey}')
+</if> 
+<if test= "where != null and where.leftLikeUrl != null">
+and URL like CONCAT('%','${where.leftLikeUrl}')
+</if> 
+<if test= "where != null and where.leftLikeCreator != null">
+and CREATOR like CONCAT('%','${where.leftLikeCreator}')
+</if> 
+<if test= "where != null and where.leftLikeModifier != null">
+and MODIFIER like CONCAT('%','${where.leftLikeModifier}')
+</if> 
+<if test= "where != null and where.leftLikeIsDeleted != null">
+and IS_DELETED like CONCAT('%','${where.leftLikeIsDeleted}')
+</if> 
+<if test= "where != null and where.rightLikeId != null">
+and ID like CONCAT('${where.rightLikeId}','%')
+</if> 
+<if test= "where != null and where.rightLikeCkey != null">
+and CKEY like CONCAT('${where.rightLikeCkey}','%')
+</if> 
+<if test= "where != null and where.rightLikeUrl != null">
+and URL like CONCAT('${where.rightLikeUrl}','%')
+</if> 
+<if test= "where != null and where.rightLikeCreator != null">
+and CREATOR like CONCAT('${where.rightLikeCreator}','%')
+</if> 
+<if test= "where != null and where.rightLikeModifier != null">
+and MODIFIER like CONCAT('${where.rightLikeModifier}','%')
+</if> 
+<if test= "where != null and where.rightLikeIsDeleted != null">
+and IS_DELETED like CONCAT('${where.rightLikeIsDeleted}','%')
+</if> 
+<if test= "where != null and where.notLikeId != null">
+and ID not like CONCAT('%','${where.notLikeId}','%')
+</if> 
+<if test= "where != null and where.notLikeCkey != null">
+and CKEY not like CONCAT('%','${where.notLikeCkey}','%')
+</if> 
+<if test= "where != null and where.notLikeUrl != null">
+and URL not like CONCAT('%','${where.notLikeUrl}','%')
+</if> 
+<if test= "where != null and where.notLikeCreator != null">
+and CREATOR not like CONCAT('%','${where.notLikeCreator}','%')
+</if> 
+<if test= "where != null and where.notLikeModifier != null">
+and MODIFIER not like CONCAT('%','${where.notLikeModifier}','%')
+</if> 
+<if test= "where != null and where.notLikeIsDeleted != null">
+and IS_DELETED not like CONCAT('%','${where.notLikeIsDeleted}','%')
+</if> 
+<if test= "where != null and where.notLeftLikeId != null">
+and ID not like CONCAT('%','${where.notLeftLikeId}')
+</if> 
+<if test= "where != null and where.notLeftLikeCkey != null">
+and CKEY not like CONCAT('%','${where.notLeftLikeCkey}')
+</if> 
+<if test= "where != null and where.notLeftLikeUrl != null">
+and URL not like CONCAT('%','${where.notLeftLikeUrl}')
+</if> 
+<if test= "where != null and where.notLeftLikeCreator != null">
+and CREATOR not like CONCAT('%','${where.notLeftLikeCreator}')
+</if> 
+<if test= "where != null and where.notLeftLikeModifier != null">
+and MODIFIER not like CONCAT('%','${where.notLeftLikeModifier}')
+</if> 
+<if test= "where != null and where.notLeftLikeIsDeleted != null">
+and IS_DELETED not like CONCAT('%','${where.notLeftLikeIsDeleted}')
+</if> 
+<if test= "where != null and where.notRightLikeId != null">
+and ID not like CONCAT('%','${where.notRightLikeId}','%')
+</if> 
+<if test= "where != null and where.notRightLikeCkey != null">
+and CKEY not like CONCAT('%','${where.notRightLikeCkey}','%')
+</if> 
+<if test= "where != null and where.notRightLikeUrl != null">
+and URL not like CONCAT('%','${where.notRightLikeUrl}','%')
+</if> 
+<if test= "where != null and where.notRightLikeCreator != null">
+and CREATOR not like CONCAT('%','${where.notRightLikeCreator}','%')
+</if> 
+<if test= "where != null and where.notRightLikeModifier != null">
+and MODIFIER not like CONCAT('%','${where.notRightLikeModifier}','%')
+</if> 
+<if test= "where != null and where.notRightLikeIsDeleted != null">
+and IS_DELETED not like CONCAT('%','${where.notRightLikeIsDeleted}','%')
+</if> 
+<if test= "where != null and where.greaterThanId != null and where.lessThanId != null">
+and ID &lt; #{where.lessThanId} and ID &gt; #{where.greaterThanId}
+</if>
+<if test= "where != null and where.equalAndGreaterThanId != null and where.equalAndLessThanId != null">
+and ID &lt;= #{where.equalAndLessThanId} and ID &gt;= #{where.equalAndGreaterThanId}
+</if>
+<if test= "where != null and where.greaterThanCkey != null and where.lessThanCkey != null">
+and CKEY &lt; #{where.lessThanCkey} and CKEY &gt; #{where.greaterThanCkey}
+</if>
+<if test= "where != null and where.equalAndGreaterThanCkey != null and where.equalAndLessThanCkey != null">
+and CKEY &lt;= #{where.equalAndLessThanCkey} and CKEY &gt;= #{where.equalAndGreaterThanCkey}
+</if>
+<if test= "where != null and where.greaterThanUrl != null and where.lessThanUrl != null">
+and URL &lt; #{where.lessThanUrl} and URL &gt; #{where.greaterThanUrl}
+</if>
+<if test= "where != null and where.equalAndGreaterThanUrl != null and where.equalAndLessThanUrl != null">
+and URL &lt;= #{where.equalAndLessThanUrl} and URL &gt;= #{where.equalAndGreaterThanUrl}
+</if>
+<if test= "where != null and where.greaterThanVersion != null and where.lessThanVersion != null">
+and VERSION &lt; #{where.lessThanVersion} and VERSION &gt; #{where.greaterThanVersion}
+</if>
+<if test= "where != null and where.equalAndGreaterThanVersion != null and where.equalAndLessThanVersion != null">
+and VERSION &lt;= #{where.equalAndLessThanVersion} and VERSION &gt;= #{where.equalAndGreaterThanVersion}
+</if>
+<if test= "where != null and where.greaterThanGmtCreated != null and where.lessThanGmtCreated != null">
+and GMT_CREATED &lt; #{where.lessThanGmtCreated} and GMT_CREATED &gt; #{where.greaterThanGmtCreated}
+</if>
+<if test= "where != null and where.equalAndGreaterThanGmtCreated != null and where.equalAndLessThanGmtCreated != null">
+and GMT_CREATED &lt;= #{where.equalAndLessThanGmtCreated} and GMT_CREATED &gt;= #{where.equalAndGreaterThanGmtCreated}
+</if>
+<if test= "where != null and where.greaterThanGmtModified != null and where.lessThanGmtModified != null">
+and GMT_MODIFIED &lt; #{where.lessThanGmtModified} and GMT_MODIFIED &gt; #{where.greaterThanGmtModified}
+</if>
+<if test= "where != null and where.equalAndGreaterThanGmtModified != null and where.equalAndLessThanGmtModified != null">
+and GMT_MODIFIED &lt;= #{where.equalAndLessThanGmtModified} and GMT_MODIFIED &gt;= #{where.equalAndGreaterThanGmtModified}
+</if>
+<if test= "where != null and where.greaterThanCreator != null and where.lessThanCreator != null">
+and CREATOR &lt; #{where.lessThanCreator} and CREATOR &gt; #{where.greaterThanCreator}
+</if>
+<if test= "where != null and where.equalAndGreaterThanCreator != null and where.equalAndLessThanCreator != null">
+and CREATOR &lt;= #{where.equalAndLessThanCreator} and CREATOR &gt;= #{where.equalAndGreaterThanCreator}
+</if>
+<if test= "where != null and where.greaterThanModifier != null and where.lessThanModifier != null">
+and MODIFIER &lt; #{where.lessThanModifier} and MODIFIER &gt; #{where.greaterThanModifier}
+</if>
+<if test= "where != null and where.equalAndGreaterThanModifier != null and where.equalAndLessThanModifier != null">
+and MODIFIER &lt;= #{where.equalAndLessThanModifier} and MODIFIER &gt;= #{where.equalAndGreaterThanModifier}
+</if>
+<if test= "where != null and where.greaterThanIsDeleted != null and where.lessThanIsDeleted != null">
+and IS_DELETED &lt; #{where.lessThanIsDeleted} and IS_DELETED &gt; #{where.greaterThanIsDeleted}
+</if>
+<if test= "where != null and where.equalAndGreaterThanIsDeleted != null and where.equalAndLessThanIsDeleted != null">
+and IS_DELETED &lt;= #{where.equalAndLessThanIsDeleted} and IS_DELETED &gt;= #{where.equalAndGreaterThanIsDeleted}
+</if>
+<if test= "where != null and where.id != null">
+and ID = #{where.id}
+</if> 
+<if test= "where != null and where.ckey != null">
+and CKEY = #{where.ckey}
+</if> 
+<if test= "where != null and where.url != null">
+and URL = #{where.url}
+</if> 
+<if test= "where != null and where.version != null">
+and VERSION = #{where.version}
+</if> 
+<if test= "where != null and where.gmtCreated != null">
+and GMT_CREATED = #{where.gmtCreated}
+</if> 
+<if test= "where != null and where.gmtModified != null">
+and GMT_MODIFIED = #{where.gmtModified}
+</if> 
+<if test= "where != null and where.creator != null">
+and CREATOR = #{where.creator}
+</if> 
+<if test= "where != null and where.modifier != null">
+and MODIFIER = #{where.modifier}
+</if> 
+<if test= "where != null and where.isDeleted != null">
+and IS_DELETED = #{where.isDeleted}
+</if> 
+ </where>
+ </sql>	
+</mapper>

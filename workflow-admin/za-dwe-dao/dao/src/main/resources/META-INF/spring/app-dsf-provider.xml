@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+
+	 <bean class="com.zhongan.dsf.spring.DSFServer">
+		<property name="registerHost" value="${dsf.register.host}" />
+		<property name="registerPort" value="${dsf.register.port}" />
+	</bean>
+	
+	<bean id="formBateService" class="com.zhongan.dsf.provider.SpringProviderBean">
+		<property name="serviceInterface" value="com.zhongan.dwe.dao.service.TbFormBatearrayService" />
+		<property name="target" ref="formBateServiceImpl" />
+	</bean>
+	<bean id="formBateServiceImpl" class="com.zhongan.dwe.dao.service.impl.TbFormBatearrayServiceImpl" />
+	
+	<bean id="groupAndUsersService" class="com.zhongan.dsf.provider.SpringProviderBean">
+		<property name="serviceInterface" value="com.zhongan.dwe.dao.service.GroupAndUsersService" />
+		<property name="target" ref="groupAndUsersServiceImpl" />
+	</bean>
+	<bean id="groupAndUsersServiceImpl" class="com.zhongan.dwe.dao.service.impl.GroupAndUsersServiceImpl" />
+		
+	<bean id="actIdGroupService11" class="com.zhongan.dsf.provider.SpringProviderBean">
+		<property name="serviceInterface" value="com.zhongan.dwe.dao.service.ActIdGroupService" />
+		<property name="target" ref="actIdGroupServiceImpl" />
+	</bean>
+	<bean id="actIdGroupServiceImpl" class="com.zhongan.dwe.dao.service.impl.ActIdGroupServiceImpl" />
+		
+	<bean id="tbExtUserService11" class="com.zhongan.dsf.provider.SpringProviderBean">
+		<property name="serviceInterface" value="com.zhongan.dwe.dao.service.ActIdUserService" />
+		<property name="target" ref="actIdUserServiceImpl" />
+	</bean>
+	<bean id="actIdUserServiceImpl" class="com.zhongan.dwe.dao.service.impl.ActIdUserServiceImpl" />
+	
+	
+	<bean id="actIdUserService11" class="com.zhongan.dsf.provider.SpringProviderBean">
+		<property name="serviceInterface" value="com.zhongan.dwe.dao.service.TbExtUserService" />
+		<property name="target" ref="tbExtUserServiceImpl" />
+	</bean>
+	<bean id="tbExtUserServiceImpl" class="com.zhongan.dwe.dao.service.impl.TbExtUserServiceImpl" />
+
+</beans>
